@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soll ich heute paddeln? | Wilstermarsch Wetter & Wasserportal</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<header class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                Aktuelle Wetterbedingungen für Wassersportler
+            </span>
+
+            <h1>
+                Soll ich heute paddeln?
+            </h1>
+
+            <p class="hero-text">
+                Alle wichtigen Informationen für Paddler und Segler in der
+                Wilstermarsch, für die Gewässer der Stör und der Wilster Au.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#bedingungen" class="btn btn-primary">
+                    Aktuelle Bedingungen
+                </a>
+
+                <a href="#gezeiten" class="btn btn-secondary">
+                    Gezeiten ansehen
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+<main>
+
+    <!-- Statusleiste -->
+    <section class="status-bar">
+
+        <div class="container status-wrapper">
+
+            <div>
+                <strong>Letzte Aktualisierung:</strong>
+                <span id="last-update">Lade Daten...</span>
+            </div>
+
+            <button id="refreshBtn" class="refresh-btn">
+                <i class="fas fa-rotate-right"></i>
+                Aktualisieren
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- Ladeanimation -->
+    <div id="loader" class="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Fehlermeldung -->
+    <div id="errorBox" class="error-box hidden">
+        ❌ Die Daten sind gerade leider nicht verfügbar.
+    </div>
+
+    <!-- Aktuelle Bedingungen -->
+    <section id="bedingungen" class="section">
+
+        <div class="container">
+
+            <div class="section-heading">
+                <h2>Aktuelle Bedingungen</h2>
+                <p>Wetter, Wind und Wasser in der Wilstermarsch auf einen Blick.</p>
+            </div>
+
+            <div class="card-grid">
+
+                <!-- Wetterkarte -->
+                <article class="info-card">
+
+                    <div class="card-header">
+                        <i class="fa-solid fa-cloud-sun"></i>
+                        <h3>Wetter</h3>
+                    </div>
+
+                    <div class="card-content">
+
+                        <div class="data-row">
+                            <span>Temperatur</span>
+                            <strong id="temp">-- °C</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Wetterzustand</span>
+                            <strong id="weather">--</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Niederschlag</span>
+                            <strong id="rain">-- %</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Luftfeuchtigkeit</span>
+                            <strong id="humidity">-- %</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- Wind -->
+                <article class="info-card">
+
+                    <div class="card-header">
+                        <i class="fa-solid fa-wind"></i>
+                        <h3>Wind</h3>
+                    </div>
+
+                    <div class="card-content">
+
+                        <div class="data-row">
+                            <span>Windgeschwindigkeit</span>
+                            <strong id="windspeed">-- km/h</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Beaufort</span>
+                            <strong id="beaufort">--</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Windrichtung</span>
+                            <strong id="winddir">--</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Böen</span>
+                            <strong id="gusts">-- km/h</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+                <!-- Gezeiten -->
+                <article class="info-card" id="gezeiten">
+
+                    <div class="card-header">
+                        <i class="fa-solid fa-water"></i>
+                        <h3>Gezeiten</h3>
+                    </div>
+
+                    <div class="card-content">
+
+                        <div class="data-row">
+                            <span>Nächstes Hochwasser</span>
+                            <strong id="highTide">--</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Nächstes Niedrigwasser</span>
+                            <strong id="lowTide">--</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Wasserstand</span>
+                            <strong id="waterLevel">--</strong>
+                        </div>
+
+                        <div class="data-row">
+                            <span>Tendenz</span>
+                            <strong id="trend">--</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Empfehlung -->
+    <section class="section recommendation-section">
+
+        <div class="container">
+
+            <div id="recommendationCard" class="recommendation-card">
+
+                <h2>Tour-Empfehlung</h2>
+
+                <div id="recommendationText">
+                    Daten werden geladen...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Revier -->
+    <section class="section">
+
+        <div class="container">
+
+            <div class="section-heading">
+                <h2>Paddeln in der Natur</h2>
+                <p>Die Wilstermarsch bietet beliebte Wasserwege und atemberaubende Naturräume.</p>
+            </div>
+
+            <div class="card-grid">
+
+                <article class="location-card">
+
+                    <h3>Stör</h3>
+
+                    <p>
+                        Die Stör verbindet die Wilstermarsch mit der Elbe und
+                        bietet ideale Bedingungen für Kanuten, Wanderpaddler
+                        und Freizeitkapitäne.
+                    </p>
+
+                </article>
+
+                <article class="location-card">
+
+                    <h3>Wilster Au</h3>
+
+                    <p>
+                        Ruhiges, naturnahes Gewässer mit vielfältiger Tierwelt.
+                        Perfekt für entspannte Paddeltouren und Naturbeobachtung.
+                    </p>
+
+                </article>
+
+                <article class="location-card">
+
+                    <h3>Wilstermarsch</h3>
+
+                    <p>
+                        Deutschlands tiefste Landregion bietet einzigartige
+                        Marschlandschaften, Wasserwege und maritime Weite.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+            <h4>Impressum</h4>
+            <p>ist vorhanden</p>
+        </div>
+
+        <div>
+            <h4>Datenschutz</h4>
+            <p>wird gesichert</p>
+        </div>
+
+        <div>
+            <h4>Datenquellen</h4>
+            <p>
+                Open-Meteo API<br>
+                Tide API (WorldTides/Fallback)
+            </p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Copyright by Judith Timm, Semester 5.3
+    </div>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
